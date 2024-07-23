@@ -4,11 +4,14 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 
-export function AvatarImg({imgSrc}: {imgSrc: string | undefined}) {
+export function AvatarImg({imgSrc, initName}: {
+  imgSrc: string | undefined;
+  initName: string | undefined;
+}) {
   return (
     <Avatar>
       <AvatarImage src={imgSrc} alt="@shadcn" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarFallback>{initName}</AvatarFallback>
     </Avatar>
   )
 }
