@@ -2,19 +2,24 @@ import { useSession } from "next-auth/react";
 import { PopoverProfile } from "./Popover";
 import { Button } from "./ui/button";
 import * as actions from "@/actions"
+import { useEffect } from "react";
 
 
 const NavbarAuth = () => {
-  const session = useSession();  
-  const nameInit = session?.data?.user?.name!
+  const {data: session, status} = useSession();  
+  const nameInit = session?.user?.name!
 
+  useEffect(() => {
+    console.log(status);
+  }, [status])
+  
   return (
-    session.status === "loading" 
+    status === "loading" 
     ? null 
-    : session?.data?.user ? (
+    : session?.user ? (
       <div className="absolute right-4 bottom-4 flex items-center">
         <PopoverProfile 
-          imgSrc={session?.data?.user.image!} 
+          imgSrc={session?.user.image!} 
           initName={nameInit.slice(0, 1)}
         />
       </div>

@@ -7,7 +7,7 @@ import NavbarAuth from "./NavbarAuth";
 
 export function NavbarDemo() {
   return (
-    <div className="relative w-full flex items-center justify-center mb-4 font-mono tracking-wider">
+    <div className="relative w-full flex items-center justify-center font-mono tracking-wider">
       <Navbar className="top-2" />
     </div>
   );
