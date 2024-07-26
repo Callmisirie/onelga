@@ -3,8 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -17,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { createExercise } from "@/actions"
 import FormButton from "../FormButton"
+import { useState } from "react"
 
 
 const formSchema = z.object({
@@ -38,7 +37,8 @@ export function ExerciseCreateForm() {
     },
   })
 
-  const {isSubmitting} = form.formState
+  const {reset, formState: {isSubmitting}} = form
+  const [authMessage, setAuthMessage] = useState({message: "", success: false})
 
   // Define the submit handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -48,14 +48,22 @@ export function ExerciseCreateForm() {
     formData.append("goal", values.goal)
 
     // Use the FormData object with createExercise function
-    await createExercise(formData)
+    const response = await createExercise(formData)
+
+    setAuthMessage(response)
+
+    setTimeout(() => {
+      setAuthMessage({message: "", success: false})
+    }, 5000);
+
+    reset()
 
     // Log the values for debugging
     console.log(values)
   }
 
   return (
-    <div className="flex w-fit border p-8 rounded-2xl">
+    <div className="flex flex-col items-center w-fit border p-8 rounded-2xl">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -92,7 +100,18 @@ export function ExerciseCreateForm() {
           />
           <FormButton isSubmitting={isSubmitting}/>
         </form>
-      </Form>      
+      </Form>
+      {authMessage.message && (
+        <div className={`${authMessage.success 
+        ? "bg-green-200 border-green-600" 
+        : "bg-red-200 border-red-600"} border rounded-3xl px-2 py-1 mt-4`}>
+          <p className={`${authMessage.success 
+            ? " text-green-600" 
+            : " text-red-600"} text-center`}>
+              {authMessage.message}
+          </p>          
+        </div>        
+      )}
     </div>
 
   )

@@ -10,7 +10,7 @@ export function AvatarImg({imgSrc, initName}: {
 }) {
   return (
     <Avatar>
-      <AvatarImage src={imgSrc} alt="@shadcn" />
+      <AvatarImage src={imgSrc} alt="profile image" />
       <AvatarFallback>{initName}</AvatarFallback>
     </Avatar>
   )
