@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchExercise } from "@/actions/fetch-exercise";
+import { fetchExercise } from "@/actions";
 import type { Exercise } from "@prisma/client";
 import { clearInterval, setInterval } from "timers";
 
@@ -32,15 +32,19 @@ const ExerciseShowCard = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-wrap justify-evenly items-center gap-10 w-fit mt-10">
       {exercises?.map((exercise) => (
         <div
           key={exercise.id}
-          className="flex flex-col items-center p-4 rounded-md border w-fit gap-4"
+          className="flex flex-col items-center p-4 rounded-2xl border w-fit h-full shadow-lg"
         >
-          <h2>{exercise.title}</h2>
-          <p>{exercise.goalTarget}</p>
-          <p>{exercise.currentTarget}</p>
+          <h2 className="font-semibold">{exercise.title}</h2>
+          <div className="flex flex-col items-start p-4 border border-gray-200 rounded-3xl gap-2 w-full">
+            <p className="text-center">Target: <span className="text-sm text-gray-500">{exercise.goalTarget}</span></p>
+            <div className="border border-gray-100 w-full" />
+            <p>Current: <span  className="text-sm text-gray-500">{exercise.currentTarget}</span></p>
+          </div>
+
         </div>
       ))}
     </div>

@@ -1,6 +1,5 @@
 "use server"
 
-import type { Exercise } from "@prisma/client";
 import { auth } from "@/auth";
 import { db } from "@/db";
 
